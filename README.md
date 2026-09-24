@@ -38,25 +38,51 @@ From the project folder:
 python crsf_info.py
 ```
 
-## Betaflight passthrough usage
+## Connection modes
 
-This script is designed to work when the RX is exposed through Betaflight passthrough.
+This script works in two different setups:
 
-In Betaflight CLI, enable passthrough on the UART you want to expose:
+### 1) Direct serial connection (no passthrough)
+
+If you connect the RX to a USB-TTL serial adapter directly, you do not need to run any Betaflight passthrough command.
+
+Typical setup:
+
+1. Connect the RX directly to a USB-TTL serial adapter.
+2. Plug that adapter into your PC.
+3. Start the script.
+4. Select the COM port and baud rate.
+5. Let it listen for CRSF traffic.
+
+In this mode, do not run `serialpassthrough` at all.
+
+### 2) Through Betaflight / FC passthrough
+
+If the RX is exposed through the flight controller, then you can enable passthrough from Betaflight CLI. In this case, the command is only used inside Betaflight and only when the RX is being exposed via the FC UART.
+
+Examples:
 
 ```bash
 serialpassthrough 0 420000
 ```
 
-Or for another UART number:
-
 ```bash
 serialpassthrough 1 420000
 ```
 
-Typical setup:
+Or using the UART name directly, depending on firmware:
 
-1. Connect the RX or FC UART to your TTL/USB serial adapter.
+```bash
+serialpassthrough UART1 420000
+```
+
+```bash
+serialpassthrough UART2 420000
+```
+
+Then:
+
+1. Connect the FC UART/USB serial adapter as required by your setup.
 2. Open Betaflight CLI.
 3. Run the passthrough command for the correct UART.
 4. Start the script.
